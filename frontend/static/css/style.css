@@ -1,0 +1,204 @@
+:root {
+  --bg-1: #f4f7ef;
+  --bg-2: #dce8cf;
+  --ink: #1f2a1d;
+  --muted: #4d5a4a;
+  --brand: #2b6c45;
+  --brand-2: #c98f2f;
+  --card: rgba(255, 255, 255, 0.88);
+  --line: rgba(31, 42, 29, 0.14);
+  --shadow: 0 14px 34px rgba(31, 42, 29, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(201, 143, 47, 0.18), transparent 35%),
+    radial-gradient(circle at 90% 12%, rgba(43, 108, 69, 0.22), transparent 32%),
+    linear-gradient(160deg, var(--bg-1), var(--bg-2));
+}
+
+.page-shell {
+  width: min(1100px, 92vw);
+  margin: 2.5rem auto 3rem;
+}
+
+.hero-card,
+.panel,
+.status-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
+}
+
+.hero-card {
+  padding: 2rem;
+  animation: fadeUp 0.5s ease;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  max-width: 65ch;
+}
+
+.analyze-form {
+  margin-top: 1.4rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  font-family: "IBM Plex Serif", serif;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 130px;
+}
+
+textarea:focus {
+  outline: 2px solid rgba(43, 108, 69, 0.3);
+  border-color: var(--brand);
+}
+
+.actions-row {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.72rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+#analyzeBtn {
+  background: var(--brand);
+  color: #fff;
+}
+
+#downloadPdfBtn {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+button:hover:enabled {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.status-panel {
+  margin-top: 1.2rem;
+  padding: 0.95rem 1rem;
+  font-weight: 600;
+}
+
+.status-panel.error {
+  color: #8a2020;
+  border-color: rgba(138, 32, 32, 0.35);
+}
+
+.result-grid {
+  margin-top: 1.4rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.panel {
+  padding: 1.1rem 1.2rem;
+  animation: fadeUp 0.45s ease;
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.content-block {
+  font-family: "IBM Plex Serif", serif;
+  line-height: 1.65;
+  color: #263123;
+}
+
+.content-block table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.content-block th,
+.content-block td {
+  border: 1px solid rgba(31, 42, 29, 0.2);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .page-shell {
+    margin-top: 1.2rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .hero-card {
+    padding: 1.2rem;
+  }
+}

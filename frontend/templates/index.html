@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eco-Friendly Material Advisor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero-card">
+      <p class="eyebrow">Sustainable Construction Intelligence</p>
+      <h1>Eco-Friendly Material Advisor</h1>
+      <p class="subtitle">Generate research-backed recommendations for greener construction decisions.</p>
+
+      <form id="analyzeForm" class="analyze-form">
+        <label for="requirement" class="label">Project Requirement</label>
+        <textarea
+          id="requirement"
+          name="requirement"
+          rows="5"
+          placeholder="Example: Load-bearing wall for a 3-story residential building in a tropical climate with moderate budget."
+          required
+        ></textarea>
+
+        <div class="actions-row">
+          <button id="analyzeBtn" type="submit">Generate Recommendation</button>
+          <button id="downloadPdfBtn" type="button" disabled>Download PDF Report</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="statusPanel" class="status-panel hidden"></section>
+
+    <section id="resultSection" class="result-grid hidden">
+      <article class="panel">
+        <h2>Technical Research Data</h2>
+        <div id="researchOutput" class="content-block"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Recommendation Report</h2>
+        <div id="reportOutput" class="content-block"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

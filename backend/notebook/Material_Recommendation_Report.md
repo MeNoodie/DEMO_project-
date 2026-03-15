@@ -1,50 +1,34 @@
 **Sustainable Material Recommendation Report**
-=============================================
+==============================================
 
 ### Executive Recommendation
 
-Based on the research findings, **Rammed Earth** is the **Best Fit** material for a load-bearing wall in a tropical climate with high thermal mass and moderate budget. This recommendation is driven by Rammed Earth's excellent balance of structural performance, sustainability metrics, and economic viability.
+Based on the technical data provided, **Rammed Earth** is the recommended material for load-bearing walls in a 3-story residential building in a tropical climate. This material offers a unique combination of high thermal mass, durability, and low embodied energy, making it an ideal choice for reducing cooling costs and minimizing environmental impact while fitting a moderate budget.
 
 ### The 'Green Premium' Analysis
 
-| Material | Upfront Cost | Long-term Environmental/Operational Savings |
-| --- | --- | --- |
-| Rammed Earth | Moderate ($100-300 per square meter) | High (energy efficiency, low maintenance) |
-| Adobe | Low-Moderate ($50-200 per square meter) | Moderate (energy efficiency, moderate maintenance) |
-| Concrete with Recycled Aggregates | Moderate-High ($150-400 per square meter) | Moderate (energy efficiency, moderate maintenance) |
-| Traditional Material (OPC Concrete) | High ($200-500 per square meter) | Low (high energy consumption, high maintenance) |
+While **Rammed Earth** may have a slightly higher upfront cost compared to traditional materials, its long-term benefits far outweigh the initial investment. The high thermal mass of rammed earth can reduce cooling costs by up to 20-30%, resulting in significant operational savings over the building's lifespan. Additionally, the low embodied energy of rammed earth reduces the carbon footprint of the building, contributing to a more sustainable and environmentally friendly structure.
 
-**Key Takeaways:**
-
-* Rammed Earth offers a **high thermal mass**, reducing cooling costs and providing long-term environmental benefits.
-* Rammed Earth has a **low embodied carbon footprint** (0.1-0.3 kgCO2e/kg) and **high recyclability percentage**, making it an attractive sustainable option.
-* While Adobe is a cost-effective option, its **lower compressive strength** (1-3 MPa) may require additional structural support, increasing overall costs.
+In comparison, **Recycled Concrete Aggregate (RCA)** offers a higher compressive strength and reduced emissions, but its thermal mass is lower than rammed earth. **Cross-Laminated Timber (CLT)** has a high strength-to-weight ratio and stores carbon, but its high upfront cost and lower thermal mass make it less suitable for this specific project.
 
 ### Compliance & Certification
 
-Rammed Earth can contribute to **LEED** (Leadership in Energy and Environmental Design) and **BREEAM** (Building Research Establishment Environmental Assessment Method) certifications due to its:
+The use of **Rammed Earth** in load-bearing walls can contribute to various green building certifications, including:
 
-* **Low embodied carbon footprint**
-* **High recyclability percentage**
-* **Energy efficiency** characteristics
-* **Local and regional availability** of raw materials
+* **LEED**: Rammed earth can help earn points in the categories of Material and Resources, Indoor Air Quality, and Energy and Atmosphere.
+* **BREEAM**: Rammed earth can contribute to credits in the categories of Materials, Energy, and Health and Wellbeing.
+* **Local green building codes**: Rammed earth can help comply with local regulations and ordinances related to sustainable building practices.
 
 ### Implementation Risks
 
-Potential bottlenecks to consider when implementing Rammed Earth include:
+Potential bottlenecks to consider when using **Rammed Earth** include:
 
-* **Specialized labor requirements**: Rammed Earth construction requires skilled labor, which may be in short supply in certain regions.
-* **Supply chain lead times**: Ensuring a consistent supply of raw materials may require careful planning and coordination.
-* **Quality control**: Rammed Earth construction requires careful quality control measures to ensure structural integrity and durability.
+* **Specialized labor requirements**: Rammed earth construction requires skilled labor with experience in this specific technique.
+* **Supply chain lead times**: Sourcing high-quality soil and aggregate materials may require longer lead times, which can impact the project schedule.
+* **Moisture control**: Rammed earth is sensitive to moisture, and proper design and construction techniques are necessary to ensure the material's durability and performance.
 
-By choosing Rammed Earth as the load-bearing wall material, the project can achieve a **sustainable, energy-efficient, and cost-effective** solution that meets the moderate budget requirements and supports a **tropical climate** with high thermal mass demands. 
+**Key Takeaways**
 
-**Strategic Recommendation:**
-
-To mitigate the implementation risks associated with Rammed Earth, we recommend:
-
-1. **Partnering with experienced contractors** who have a proven track record of Rammed Earth construction.
-2. **Developing a comprehensive quality control plan** to ensure structural integrity and durability.
-3. **Establishing a reliable supply chain** for raw materials to minimize lead times and ensure consistency.
-
-By adopting Rammed Earth as the load-bearing wall material and implementing these strategic recommendations, the project can achieve a **best-in-class** sustainable building solution that balances structural performance, environmental sustainability, and economic viability.
+* **Rammed Earth** is the recommended material for load-bearing walls in a 3-story residential building in a tropical climate.
+* **High thermal mass** and **low embodied energy** make rammed earth an ideal choice for reducing cooling costs and minimizing environmental impact.
+* **Moderate cost** and **potential for green building certifications** make rammed earth a viable option for project developers.
