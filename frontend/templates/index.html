@@ -1,239 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eco-Friendly Material Advisor 🌱</title>
+  <title>Eco-Friendly Material Advisor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
-  <div class="app-wrapper">
-    <!-- Floating Background Elements -->
-    <div class="bg-shape bg-shape-1"></div>
-    <div class="bg-shape bg-shape-2"></div>
-    <div class="bg-shape bg-shape-3"></div>
+  <div class="page-glow"></div>
 
-    <!-- Header -->
-    <header class="app-header">
-      <div class="header-content">
-        <div class="brand">
-          <div class="brand-icon">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 2L20 12L28 14L22 22L24 30L16 26L8 30L10 22L4 14L12 12L16 2Z" fill="url(#leaf-gradient)" />
-              <defs>
-                <linearGradient id="leaf-gradient" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#34D399" />
-                  <stop offset="1" stop-color="#059669" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-          <div class="brand-text">
-            <span class="brand-label">Eco-Friendly Advisor</span>
-            <h1>Material Planner</h1>
-          </div>
-        </div>
-        <p class="header-tagline">Smart sustainable material recommendations for your building project</p>
-      </div>
-    </header>
+  <main class="shell">
+    <section id="inputView" class="view active">
+      <header class="hero">
+        <p class="kicker">Eco-Friendly Material Advisor</p>
+        <h1>Tell us your project details</h1>
+        <p>Submit inputs first, then receive a single-page recommendation report with charts and downloadable PDF.</p>
+      </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Input Panel -->
-      <section class="card input-section">
-        <div class="card-header">
-          <div class="card-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-            </svg>
-          </div>
-          <div>
-            <h2>Project Details</h2>
-            <p>Tell us about your building project</p>
-          </div>
-        </div>
-
-        <form id="advisorForm" class="form">
+      <article class="form-card">
+        <form id="analysisForm">
           <div class="form-grid">
-            <div class="form-group">
-              <label for="building_type">Building Type</label>
-              <select id="building_type">
-                <option value="residential">🏠 Residential</option>
-                <option value="commercial">🏢 Commercial</option>
-                <option value="industrial">🏭 Industrial</option>
-                <option value="institutional">🏫 Institutional</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="floors">Number of Floors</label>
-              <div class="input-with-icon">
-                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-6h6v6"/>
-                </svg>
-                <input type="number" id="floors" min="1" placeholder="e.g., 3" />
-              </div>
-            </div>
-
-            <div class="form-group form-group-full">
-              <label for="location">📍 Location</label>
-              <input type="text" id="location" placeholder="e.g., Ranchi, Jharkhand" />
-            </div>
-
-            <div class="form-group">
-              <label for="budget">💰 Budget</label>
-              <select id="budget">
-                <option value="low">Low (Economical)</option>
-                <option value="moderate">Moderate (Balanced)</option>
-                <option value="high">High (Premium)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="priority">🎯 Main Priority</label>
-              <select id="priority">
-                <option value="cooling">❄️ Reduce cooling cost</option>
-                <option value="cost">💵 Minimize cost</option>
-                <option value="sustainability">🌍 Maximize sustainability</option>
-                <option value="durability">🛡️ Maximize durability</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="rainfall">🌧️ Rainfall Exposure</label>
-              <select id="rainfall">
+            <label>Building Type
+              <input name="building_type" value="residential" required />
+            </label>
+            <label>Floors
+              <input name="floors" type="number" min="1" max="100" value="2" required />
+            </label>
+            <label>Location
+              <input name="location" value="Bengaluru" required />
+            </label>
+            <label>Budget Level
+              <select name="budget_level">
                 <option value="low">Low</option>
-                <option value="medium">Medium</option>
+                <option value="moderate" selected>Moderate</option>
                 <option value="high">High</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label for="material_tone">🎨 Material Tone</label>
-              <select id="material_tone">
-                <option value="balanced">⚖️ Balanced mix</option>
-                <option value="natural">🌿 Natural/Bio-based</option>
-                <option value="high_performance">⚡ High-performance</option>
+            </label>
+            <label>Priority
+              <select name="priority">
+                <option value="cooling" selected>Cooling</option>
+                <option value="cost">Cost</option>
+                <option value="sustainability">Sustainability</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label for="timeline">📅 Timeline</label>
-              <select id="timeline">
-                <option value="standard">Standard</option>
-                <option value="fast_track">Fast-track</option>
+            </label>
+            <label>Rainfall
+              <select name="rainfall">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label>Timeline
+              <select name="timeline">
                 <option value="flexible">Flexible</option>
+                <option value="standard" selected>Standard</option>
+                <option value="fast_track">Fast Track</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label for="cost_vs_sustain">⚖️ Cost vs Sustainability</label>
-              <select id="cost_vs_sustain">
-                <option value="cost">Lower upfront cost</option>
-                <option value="sustainability">Long-term sustainability</option>
+            </label>
+            <label>Material Tone
+              <select name="material_tone">
+                <option value="balanced" selected>Balanced</option>
+                <option value="natural">Natural</option>
+                <option value="high_performance">High Performance</option>
               </select>
-            </div>
-
-            <div class="form-group form-group-full">
-              <label for="extra_notes">📝 Additional Notes</label>
-              <textarea id="extra_notes" rows="3" placeholder="Any specific requirements, constraints, or preferred materials..."></textarea>
-            </div>
+            </label>
           </div>
 
-          <p id="formMessage" class="form-message" aria-live="polite"></p>
+          <label>Tradeoff
+            <select name="cost_preference">
+              <option value="balanced" selected>Balanced</option>
+              <option value="cost_over_sustainability">Lower Upfront Cost</option>
+              <option value="sustainability_over_cost">Long-Term Sustainability</option>
+            </select>
+          </label>
 
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary" id="submitButton">
-              <span class="btn-content">
-                <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-                <span>Generate Recommendation</span>
-              </span>
-            </button>
-            <button type="button" class="btn btn-secondary" id="resetButton">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-              </svg>
-              Reset
-            </button>
-          </div>
+          <label>Additional Note
+            <textarea name="notes" rows="3" placeholder="Any constraints, local conditions, or special requests."></textarea>
+          </label>
+
+          <button type="submit" id="analyzeBtn">Generate Recommendation Report</button>
+          <p id="formMessage" class="form-message"></p>
         </form>
-      </section>
+      </article>
+    </section>
 
-      <!-- Output Panel -->
-      <section class="card output-section">
-        <div class="card-header">
-          <div class="card-icon output-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
-            </svg>
+    <section id="reportView" class="view">
+      <div class="report-actions">
+        <button type="button" id="backBtn" class="ghost">Edit Inputs</button>
+        <button type="button" id="downloadPdfBtn">Download PDF</button>
+      </div>
+
+      <article id="reportPaper" class="report-paper">
+        <header class="report-header">
+          <p class="kicker">Eco-Friendly Material Advisor</p>
+          <h2>Sustainable Material Recommendation Report</h2>
+          <p id="reportMeta">Generated analysis based on your project inputs.</p>
+        </header>
+
+        <section>
+          <h3>Top Recommendation</h3>
+          <div id="topRecommendation"></div>
+        </section>
+
+        <section>
+          <h3>Project Snapshot</h3>
+          <div id="projectSnapshot" class="chips"></div>
+        </section>
+
+        <section>
+          <h3>Engineering Highlights</h3>
+          <div id="engineeringHighlights" class="chips"></div>
+        </section>
+
+        <section>
+          <h3>Decision Charts</h3>
+          <div class="chart-wrap">
+            <canvas id="scoreChart"></canvas>
           </div>
-          <div class="output-header-content">
-            <h2>Recommendation</h2>
-            <p>Your personalized eco-material guidance</p>
+          <div class="chart-wrap">
+            <canvas id="radarChart"></canvas>
           </div>
-          <button type="button" class="btn btn-download" id="downloadPdfBtn" disabled>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-            </svg>
-            PDF
-          </button>
-        </div>
+        </section>
 
-        <div id="reportExportArea" class="results-container">
-          <div id="resultStatus" class="status-badge hidden"></div>
+        <section>
+          <h3>Material Comparison</h3>
+          <div id="materialsTable"></div>
+        </section>
 
-          <!-- Quick Summary -->
-          <div id="shortRecommendation" class="quick-summary hidden">
-            <div class="summary-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
-              Quick Summary
-            </div>
-            <p id="shortRecommendationText"></p>
-          </div>
-
-          <!-- Main Results -->
-          <div id="result" class="result-content">
-            <div class="empty-state">
-              <div class="empty-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-              </div>
-              <h3>Ready to Help! 🌱</h3>
-              <p>Fill in your project details and we'll generate eco-friendly material recommendations tailored to your needs.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Research Notes -->
-        <details id="researchBlock" class="research-notes hidden">
-          <summary>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-            </svg>
-            Research Notes
-          </summary>
-          <pre id="researchOutput"></pre>
-        </details>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-      <p>🌍 Building a sustainable future, one material at a time</p>
-    </footer>
-  </div>
+        <section>
+          <h3>Detailed Recommendation</h3>
+          <div id="reportContent" class="markdown-body"></div>
+        </section>
+      </article>
+    </section>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="/static/js/main.js"></script>
 </body>
 </html>

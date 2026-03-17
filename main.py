@@ -4,7 +4,7 @@ import os
 import json
 import re
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -12,8 +12,6 @@ from fastapi.requests import Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
-import asyncio
-import threading
 from langchain_core.messages import HumanMessage
 from backend.workflow.agents import app as agent_app
 from backend.workflow.material_feature import compute_project_requirements
@@ -142,19 +140,23 @@ async def analyze_material(request: MaterialRequest) -> Dict[str, Any]:
         
         # Run the agent graph
         result = agent_app.invoke(initial_state)
-        
-        # Extract the final report from messages
-        messages = result.get("messages", [])
-        
-        if not messages:
-            return {"status": "error", "message": "No results generated"}
-        
-        # Get the last message (should be the reporter's output)
-        final_report = messages[-1].content if hasattr(messages[-1], 'content') else str(messages[-1])
-        
+
+        final_report = result.get("final_report", "")
+        if not final_report:
+            messages = result.get("messages", [])
+            for message in reversed(messages):
+                name = getattr(message, "name", "")
+                if name == "Reporter" and hasattr(message, "content"):
+                    final_report = message.content
+                    break
+
+        if not final_report:
+            return {"status": "error", "message": "No final report generated"}
+
         research_data = result.get("combined_research", "")
         rag_data = result.get("rag_research", "")
         web_data = result.get("web_research", "")
+        visual_data = result.get("visual_data", {})
         
         return {
             "status": "success",
@@ -169,6 +171,7 @@ async def analyze_material(request: MaterialRequest) -> Dict[str, Any]:
             "research_data": research_data,
             "rag_data": rag_data,
             "web_data": web_data,
+            "visual_data": visual_data,
             "report": final_report
         }
         
