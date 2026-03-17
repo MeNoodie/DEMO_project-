@@ -1,114 +1,142 @@
-from typing import Annotated , Literal , TypedDict  
+from typing import Any, Dict, TypedDict
 from langgraph.types import Command
 from langchain_tavily import TavilySearch
-from langgraph.graph import MessagesState, END , StateGraph, START ,END
+from langgraph.graph import MessagesState, END, StateGraph, START
 from langchain_core.messages import HumanMessage
 from langchain.agents import create_agent
-from langchain_core.tools import Tool
 from langchain_groq import ChatGroq
-
 from dotenv import load_dotenv
-import os 
+import os
 import json
+
+from backend.workflow.rag import get_rag_system
+
 load_dotenv()
 
-Tavily_api_key = os.getenv("Tavily_api_key")
-search_tool = TavilySearch(
-    max_results=5,
-    topic="general")
+search_tool = TavilySearch(max_results=5, topic="general")
 
-# Load prompts from JSON file
 prompts_path = os.path.join(os.path.dirname(__file__), "prompts", "prompts.json")
-with open(prompts_path, "r") as f:
+with open(prompts_path, "r", encoding="utf-8") as f:
     prompts = json.load(f)
 
 researcher_prompt = prompts["researcher_prompt"]
 report_prompt = prompts["report_prompt"]
-system_prompt_template = prompts["system_prompt"]
-
-members = ['Researcher', 'Reporter', 'FINISH']
-
-# Format the system prompt with members
-supervisor_system_prompt = system_prompt_template.format(members=members)
 
 LLM = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0,
 )
 
-class Router(TypedDict):
-    """Worker to route to next. If no workers needed, route to FINISH."""
-    next: Literal['Researcher', 'Reporter', 'FINISH']
-
 
 class State(MessagesState):
-    next:str
+    user_input: Dict[str, Any]
+    engineering_measures: Dict[str, Any]
+    requirement: str
+    research_query: str
+    rag_research: str
+    web_research: str
+    combined_research: str
+    final_report: str
+
 
 research_agent = create_agent(
     LLM,
-    tools = [search_tool],
-    system_prompt=researcher_prompt
-) 
-
+    tools=[search_tool],
+    system_prompt=researcher_prompt,
+)
 
 reporter_agent = create_agent(
     LLM,
-    tools = [],
-    system_prompt=report_prompt
-) 
+    tools=[],
+    system_prompt=report_prompt,
+)
 
 
-def supervisor_node(state: State) -> Command[Literal["Researcher", "Reporter", "__end__"]]:
-    
-    messages = [{"role": "system", "content": supervisor_system_prompt},] + state["messages"]
-    
-    response = LLM.with_structured_output(Router).invoke(messages)
-    
-    goto = response["next"]
-    
-    print("Supervisor initialized")
-    
-    print(goto)
-    
-    if goto == "FINISH":
-        goto = END
-        
-    return Command(goto=goto, update={"next": goto})
+def research_node(state: State) -> Command[str]:
+    requirement = state.get("requirement", "")
+    research_query = state.get("research_query", requirement)
+    user_input = state.get("user_input", {})
+    engineering = state.get("engineering_measures", {})
 
-def Research_node(state: State) -> Command[Literal["supervisor"]]:
-    
-    result = research_agent.invoke(state)
-    
-    return Command(
-        update={
-            "messages": [
-                HumanMessage(content=result["messages"][-1].content, name="Researcher")
-            ]
+    project_context = json.dumps(
+        {
+            "user_input": user_input,
+            "engineering_measures": engineering,
         },
-        goto="supervisor",
+        ensure_ascii=True,
+        indent=2,
     )
 
-def Reporter_node(state: State) -> Command[Literal["supervisor"]]:
-    
-    result = reporter_agent.invoke(state)
-    
-    return Command(
-        update={
-            "messages": [
-                HumanMessage(content=result["messages"][-1].content, name="Reporter")
-            ]
-        },
-        goto="supervisor",
+    rag_text = "RAG unavailable."
+    try:
+        rag_result = get_rag_system().ask(research_query, project_context=project_context)
+        rag_text = rag_result.get("answer", "RAG returned no answer.")
+    except Exception as exc:
+        rag_text = f"RAG lookup failed: {exc}"
+
+    web_text = "Web research unavailable."
+    try:
+        research_request = (
+            "Collect recent and practical engineering/sustainability evidence for this project.\n"
+            f"Project requirement: {requirement}\n"
+            f"Merged retrieval query:\n{research_query}\n"
+            f"Project context:\n{project_context}\n"
+            "Include material options, climate suitability, durability, cost/availability signals, and standards where possible."
+        )
+        result = research_agent.invoke({"messages": [HumanMessage(content=research_request)]})
+        web_text = result["messages"][-1].content
+    except Exception as exc:
+        web_text = f"Web research failed: {exc}"
+
+    combined = (
+        "## RAG Research\n"
+        f"{rag_text}\n\n"
+        "## Web Research\n"
+        f"{web_text}"
     )
 
-graph=StateGraph(State)
-graph.add_node("supervisor",supervisor_node)
-graph.add_node("Researcher", Research_node)
-graph.add_node("Reporter", Reporter_node)
+    return Command(
+        update={
+            "rag_research": rag_text,
+            "web_research": web_text,
+            "combined_research": combined,
+            "messages": [HumanMessage(content=combined, name="Researcher")],
+        },
+        goto="Reporter",
+    )
 
-graph.add_edge(START,"supervisor")
-# graph.add_edge("supervisor","Researcher")
-# graph.add_edge("supervisor","Reporter")
-# graph.add_edge("Reporter",END)
+
+def reporter_node(state: State) -> Command[str]:
+    user_input = state.get("user_input", {})
+    engineering = state.get("engineering_measures", {})
+    combined_research = state.get("combined_research", "")
+    requirement = state.get("requirement", "")
+    research_query = state.get("research_query", requirement)
+
+    report_request = (
+        "Create the final markdown report.\n"
+        f"User requirement:\n{requirement}\n\n"
+        f"Merged retrieval query used for research:\n{research_query}\n\n"
+        f"Structured user inputs:\n{json.dumps(user_input, ensure_ascii=True, indent=2)}\n\n"
+        f"Engineering calculations and measures:\n{json.dumps(engineering, ensure_ascii=True, indent=2)}\n\n"
+        f"Research bundle (RAG + web):\n{combined_research}\n"
+    )
+
+    result = reporter_agent.invoke({"messages": [HumanMessage(content=report_request)]})
+    final_report = result["messages"][-1].content
+
+    return Command(
+        update={
+            "final_report": final_report,
+            "messages": [HumanMessage(content=final_report, name="Reporter")],
+        },
+        goto=END,
+    )
+
+graph = StateGraph(State)
+graph.add_node("Researcher", research_node)
+graph.add_node("Reporter", reporter_node)
+graph.add_edge(START, "Researcher")
+graph.add_edge("Reporter", END)
 
 app = graph.compile()
